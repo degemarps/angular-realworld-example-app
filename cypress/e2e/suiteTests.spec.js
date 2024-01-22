@@ -48,13 +48,8 @@ describe('Test with backend', () => {
     cy.get('app-article-list button').eq(0).click().should('contain', '2')
   })
 
-  it.only('delete a new article in a global feed', () => {
-    const userCredentials = {
-      "user": {
-        "email": "luffy@test.com",
-        "password": "cypress123"
-      }
-    }
+  it('delete a new article in a global feed', () => {
+    
 
     const bodyRequest = {
       "article": {
@@ -63,10 +58,9 @@ describe('Test with backend', () => {
           "body": "A very good article",
           "tagList": []
       }
-  }
-    // Make login and get token
-    cy.request('POST', 'https://api.realworld.io/api/users/login', userCredentials).its('body').then(body => {
-      const token = body.user.token
+    }
+    // Get token to use after
+    cy.get('@token').then(token => {
 
       // Create a new article
       cy.request({
